@@ -1,4 +1,4 @@
-use crate::clap::Args;
+use crate::{clap::ARGS, data::input::INPUT};
 
 const NUMS: [&str; 9] = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
@@ -34,17 +34,17 @@ fn get_num(line: String) -> Option<i32> {
     return digits.first().copied();
 }
 
-pub fn main(args: &Args, input: &str) -> String {
-    return match args.part {
-        1 => p1(args, input),
-        2 => p2(args, input),
+pub fn main() -> String {
+    return match ARGS.part {
+        1 => p1(),
+        2 => p2(),
         _ => panic!("Unknown part"),
     };
 }
 
-fn p1(_args: &Args, input: &str) -> String {
+fn p1() -> String {
     let mut number = 0;
-    for line in input.lines() {
+    for line in INPUT.lines() {
         match get_num(line.to_owned()) {
             None => {}
             Some(num) => {
@@ -54,13 +54,22 @@ fn p1(_args: &Args, input: &str) -> String {
     }
     return number.to_string();
 }
-fn p2(_args: &Args, input: &str) -> String {
+fn p2() -> String {
     let mut number = 0;
-    for line in input.lines() {
+    for line in INPUT.lines() {
         match get_num(replace_right(line)) {
             None => {}
             Some(num) => number += (get_num(replace_left(line)).unwrap_or(0) * 10) + num,
         }
     }
     return number.to_string();
+}
+
+lazy_static::lazy_static! {
+    pub static ref DAY: crate::years::config::Day = crate::years::config::Day {
+        day: 1,
+        p1,
+        p2,
+
+    };
 }

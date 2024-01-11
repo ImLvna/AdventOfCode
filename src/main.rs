@@ -1,27 +1,31 @@
 #![feature(iter_intersperse)]
 #![feature(fs_try_exists)]
 
-use clap::get_args;
+use crate::{clap::ARGS, data::check_data_dir, years::get_year};
 
-use crate::{input::get_input, years::run_year};
-
+pub mod aoc;
 pub mod clap;
-pub mod input;
+pub mod data;
 pub mod years;
 fn main() {
-    let args = get_args();
+    let program_stopwatch = std::time::Instant::now();
 
-    let input = get_input(&args);
+    check_data_dir();
+
+    let year = get_year();
+    let day = year.get_day().expect("Unknown day");
+    let part = day.get_part();
 
     println!(
         "Running {} day {} part {} with {} input",
-        args.year, args.day, args.part, args.input
+        ARGS.year, ARGS.day, ARGS.part, ARGS.input
     );
     let stopwatch = std::time::Instant::now();
-    let output = run_year(&args, &input);
+    let output = part();
     println!("Output: {}", output);
 
-    if args.stopwatch {
-        println!("Finished in {}ms", stopwatch.elapsed().as_millis())
+    if ARGS.stopwatch {
+        println!("Finished in {}ms", program_stopwatch.elapsed().as_millis());
+        println!("Day took {}ms", stopwatch.elapsed().as_millis());
     }
 }

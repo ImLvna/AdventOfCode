@@ -1,4 +1,4 @@
-use crate::clap::Args;
+use crate::{clap::ARGS, data::input::INPUT};
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -114,16 +114,16 @@ fn parse_line(line: &str) -> Game {
         rounds: rounds,
     };
 }
-pub fn main(args: &Args, input: &str) -> String {
-    return match args.part {
-        1 => p1(args, input),
-        2 => p2(args, input),
+pub fn main() -> String {
+    return match ARGS.part {
+        1 => p1(),
+        2 => p2(),
         _ => panic!("Unknown part"),
     };
 }
 
-fn p1(_args: &Args, input: &str) -> String {
-    let lines = input.lines();
+fn p1() -> String {
+    let lines = INPUT.lines();
     let mut sum = 0;
     for line in lines {
         let game = parse_line(line);
@@ -133,8 +133,8 @@ fn p1(_args: &Args, input: &str) -> String {
     }
     return sum.to_string();
 }
-pub fn p2(_args: &Args, input: &str) -> String {
-    let lines = input.lines();
+pub fn p2() -> String {
+    let lines = INPUT.lines();
     let mut sum = 0;
     for line in lines {
         let game = parse_line(line);
@@ -143,4 +143,13 @@ pub fn p2(_args: &Args, input: &str) -> String {
         sum += power;
     }
     return sum.to_string();
+}
+
+lazy_static::lazy_static! {
+    pub static ref DAY: crate::years::config::Day = crate::years::config::Day {
+        day: 2,
+        p1,
+        p2,
+
+    };
 }

@@ -3,7 +3,7 @@ use std::{collections::HashMap, vec};
 use lazy_static::lazy_static;
 use regex::Regex;
 
-use crate::clap::Args;
+use crate::{clap::ARGS, data::input::INPUT};
 
 lazy_static! {
     static ref SYMBOL_REGEX: Regex = Regex::new(r"[^\w\d.]").unwrap();
@@ -108,16 +108,16 @@ fn pad(contents: String) -> String {
         .collect();
 }
 
-pub fn main(args: &Args, input: &str) -> String {
-    return match args.part {
-        1 => p1(args, input),
-        2 => p2(args, input),
+pub fn main() -> String {
+    return match ARGS.part {
+        1 => p1(),
+        2 => p2(),
         _ => panic!("Unknown part"),
     };
 }
 
-fn p1(_args: &Args, input: &str) -> String {
-    let contents = pad(input.to_owned());
+fn p1() -> String {
+    let contents = pad(INPUT.to_owned());
 
     let mut lines = contents.lines();
 
@@ -136,8 +136,8 @@ fn p1(_args: &Args, input: &str) -> String {
     return num.to_string();
 }
 
-pub fn p2(_args: &Args, input: &str) -> String {
-    let contents = pad(input.to_owned());
+pub fn p2() -> String {
+    let contents = pad(INPUT.to_owned());
 
     let mut lines = contents.lines();
 
@@ -175,4 +175,13 @@ pub fn p2(_args: &Args, input: &str) -> String {
     println!("{:?}", gears);
 
     return gears.values().sum::<u32>().to_string();
+}
+
+lazy_static::lazy_static! {
+    pub static ref DAY: crate::years::config::Day = crate::years::config::Day {
+        day: 3,
+        p1,
+        p2,
+
+    };
 }

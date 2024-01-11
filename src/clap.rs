@@ -14,6 +14,8 @@ pub struct Args {
     pub part: u8,
 }
 
-pub fn get_args() -> Args {
-    return Args::parse();
+use lazy_static::lazy_static;
+
+lazy_static! {
+    pub static ref ARGS: Args = Args::parse();
 }
