@@ -1,11 +1,10 @@
 use crate::clap::Args;
+use lazy_static::lazy_static;
 use regex::Regex;
 
-fn get_input(args: &Args) -> &'static str {
-    match args.input {
-        false => include_str!("../../../../inputs/2/example.txt"),
-        true => include_str!("../../../../inputs/2/input.txt"),
-    }
+lazy_static! {
+    static ref HANDFUL_REGEX: Regex = Regex::new(r"(\d+) (blue|red|green)").unwrap();
+    static ref GAME_ID_REGEX: Regex = Regex::new(r"Game (\d+)").unwrap();
 }
 
 trait IsValid {
@@ -74,10 +73,9 @@ impl GetMax for Game {
 
 fn parse_round(line: &str) -> Round {
     // println!("{}", line);
-    let handful_regex = Regex::new(r"(\d+) (blue|red|green)").unwrap();
     let handfuls = line
         .split(", ")
-        .map(|handful| handful_regex.captures(handful).unwrap());
+        .map(|handful| HANDFUL_REGEX.captures(handful).unwrap());
     // Group 1: Number
     // Group 2: Color
     let mut round = Round {
@@ -98,8 +96,7 @@ fn parse_round(line: &str) -> Round {
 }
 
 fn parse_line(line: &str) -> Game {
-    let game_id_regex = Regex::new(r"Game (\d+)").unwrap();
-    let id: u32 = game_id_regex
+    let id: u32 = GAME_ID_REGEX
         .captures(line)
         .unwrap()
         .get(1)
@@ -117,17 +114,16 @@ fn parse_line(line: &str) -> Game {
         rounds: rounds,
     };
 }
-pub fn main(args: &Args) -> String {
+pub fn main(args: &Args, input: &str) -> String {
     return match args.part {
-        1 => p1(args),
-        2 => p2(args),
+        1 => p1(args, input),
+        2 => p2(args, input),
         _ => panic!("Unknown part"),
     };
 }
 
-pub fn p1(args: &Args) -> String {
-    let contents = get_input(&args);
-    let lines = contents.lines();
+fn p1(_args: &Args, input: &str) -> String {
+    let lines = input.lines();
     let mut sum = 0;
     for line in lines {
         let game = parse_line(line);
@@ -137,9 +133,8 @@ pub fn p1(args: &Args) -> String {
     }
     return sum.to_string();
 }
-pub fn p2(args: &Args) -> String {
-    let contents = get_input(&args);
-    let lines = contents.lines();
+pub fn p2(_args: &Args, input: &str) -> String {
+    let lines = input.lines();
     let mut sum = 0;
     for line in lines {
         let game = parse_line(line);

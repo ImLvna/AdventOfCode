@@ -3,8 +3,11 @@ use clap::{arg, command, Parser};
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
+    #[arg(short, long, default_value = "example.txt")]
+    pub input: String,
+
     #[arg(short, long)]
-    pub input: bool,
+    pub stopwatch: bool,
 
     pub year: u32,
     pub day: u8,
