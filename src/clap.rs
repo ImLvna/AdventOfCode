@@ -6,8 +6,8 @@ pub struct Args {
     #[arg(short, long)]
     pub input: bool,
 
+    pub year: u32,
     pub day: u8,
-    #[arg(value_parser = clap::value_parser!(u8).range(1..))]
     pub part: u8,
 }
 

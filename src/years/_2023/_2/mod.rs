@@ -3,8 +3,8 @@ use regex::Regex;
 
 fn get_input(args: &Args) -> &'static str {
     match args.input {
-        false => include_str!("../../../inputs/2/example.txt"),
-        true => include_str!("../../../inputs/2/input.txt"),
+        false => include_str!("../../../../inputs/2/example.txt"),
+        true => include_str!("../../../../inputs/2/input.txt"),
     }
 }
 

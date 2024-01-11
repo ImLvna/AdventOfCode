@@ -2,8 +2,8 @@ use crate::clap::Args;
 
 fn get_input(args: &Args) -> &'static str {
     match args.input {
-        false => include_str!("../../../inputs/1/example.txt"),
-        true => include_str!("../../../inputs/1/input.txt"),
+        false => include_str!("../../../../inputs/3/example.txt"),
+        true => include_str!("../../../../inputs/3/input.txt"),
     }
 }
 

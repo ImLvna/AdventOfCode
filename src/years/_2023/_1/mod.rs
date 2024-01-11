@@ -1,7 +1,7 @@
 use crate::clap::Args;
 
-static EXAMPLE_INPUT: &str = include_str!("../../../inputs/1/example.txt");
-static REAL_INPUT: &str = include_str!("../../../inputs/1/input.txt");
+static EXAMPLE_INPUT: &str = include_str!("../../../../inputs/1/example.txt");
+static REAL_INPUT: &str = include_str!("../../../../inputs/1/input.txt");
 
 fn get_input(args: &Args) -> &'static str {
     match args.input {
