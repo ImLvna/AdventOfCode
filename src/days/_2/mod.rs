@@ -11,6 +11,9 @@ fn get_input(args: &Args) -> &'static str {
 trait IsValid {
     fn is_valid(&self) -> bool;
 }
+trait GetMax {
+    fn get_maximums(&self) -> Round;
+}
 
 #[derive(Copy, Clone)]
 struct Round {
@@ -45,6 +48,27 @@ impl IsValid for Game {
             }
         }
         return true;
+    }
+}
+impl GetMax for Game {
+    fn get_maximums(&self) -> Round {
+        let mut maxs = Round {
+            red: 0,
+            green: 0,
+            blue: 0,
+        };
+        for round in self.rounds.iter() {
+            if round.red > maxs.red {
+                maxs.red = round.red
+            };
+            if round.green > maxs.green {
+                maxs.green = round.green
+            };
+            if round.blue > maxs.blue {
+                maxs.blue = round.blue
+            };
+        }
+        return maxs;
     }
 }
 
@@ -119,9 +143,9 @@ pub fn p2(args: &Args) -> String {
     let mut sum = 0;
     for line in lines {
         let game = parse_line(line);
-        if game.is_valid() {
-            sum += game.id
-        };
+        let maximums = game.get_maximums();
+        let power = maximums.red * maximums.green * maximums.blue;
+        sum += power;
     }
     return sum.to_string();
 }
