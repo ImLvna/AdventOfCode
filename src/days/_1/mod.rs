@@ -45,6 +45,27 @@ fn get_num(line: String) -> Option<i32> {
 }
 
 pub fn main(args: &Args) -> String {
+    return match args.part {
+        1 => p1(args),
+        2 => p2(args),
+        _ => panic!("Unknown part"),
+    };
+}
+
+fn p1(args: &Args) -> String {
+    let contents = get_input(&args);
+    let mut number = 0;
+    for line in contents.lines() {
+        match get_num(line.to_owned()) {
+            None => {}
+            Some(num) => {
+                number += (num * 10) + get_num(line.chars().rev().collect::<String>()).unwrap_or(0)
+            }
+        }
+    }
+    return number.to_string();
+}
+fn p2(args: &Args) -> String {
     let contents = get_input(&args);
     let mut number = 0;
     for line in contents.lines() {

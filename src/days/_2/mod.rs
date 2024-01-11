@@ -93,8 +93,27 @@ fn parse_line(line: &str) -> Game {
         rounds: rounds,
     };
 }
-
 pub fn main(args: &Args) -> String {
+    return match args.part {
+        1 => p1(args),
+        2 => p2(args),
+        _ => panic!("Unknown part"),
+    };
+}
+
+pub fn p1(args: &Args) -> String {
+    let contents = get_input(&args);
+    let lines = contents.lines();
+    let mut sum = 0;
+    for line in lines {
+        let game = parse_line(line);
+        if game.is_valid() {
+            sum += game.id
+        };
+    }
+    return sum.to_string();
+}
+pub fn p2(args: &Args) -> String {
     let contents = get_input(&args);
     let lines = contents.lines();
     let mut sum = 0;
