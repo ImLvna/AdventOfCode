@@ -1,12 +1,12 @@
-use crate::clap::{Args, InputType};
+use crate::clap::Args;
 
 static EXAMPLE_INPUT: &str = include_str!("../../../inputs/1/example.txt");
 static REAL_INPUT: &str = include_str!("../../../inputs/1/input.txt");
 
 fn get_input(args: &Args) -> &'static str {
     match args.input {
-        InputType::Example => EXAMPLE_INPUT,
-        InputType::Final => REAL_INPUT,
+        false => EXAMPLE_INPUT,
+        true => REAL_INPUT,
     }
 }
 
@@ -44,7 +44,7 @@ fn get_num(line: String) -> Option<i32> {
     return digits.first().copied();
 }
 
-pub fn day1(args: &Args) -> String {
+pub fn main(args: &Args) -> String {
     let contents = get_input(&args);
     let mut number = 0;
     for line in contents.lines() {
