@@ -1,4 +1,4 @@
-use crate::{clap::ARGS, data::input::INPUT};
+use crate::data::input::INPUT;
 
 const NUMS: [&str; 9] = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
@@ -34,14 +34,6 @@ fn get_num(line: String) -> Option<i32> {
     return digits.first().copied();
 }
 
-pub fn main() -> String {
-    return match ARGS.part {
-        1 => p1(),
-        2 => p2(),
-        _ => panic!("Unknown part"),
-    };
-}
-
 fn p1() -> String {
     let mut number = 0;
     for line in INPUT.lines() {
@@ -65,11 +57,22 @@ fn p2() -> String {
     return number.to_string();
 }
 
+// Day Meta
 lazy_static::lazy_static! {
-    pub static ref DAY: crate::years::config::Day = crate::years::config::Day {
+    pub static ref DAY: crate::types::Day = crate::types::Day {
         day: 1,
-        p1,
-        p2,
+        parts: [
+            &crate::types::Part {
+                func: p1,
+                example: Some(include_str!("example1.txt")),
+                example_answer: Some(include_str!("example1_answer.txt")),
+            },
+            &crate::types::Part {
+                func: p2,
+                example: Some(include_str!("example2.txt")),
+                example_answer: Some(include_str!("example2_answer.txt")),
+            },
+        ]
 
     };
 }

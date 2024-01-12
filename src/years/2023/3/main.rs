@@ -3,7 +3,7 @@ use std::{collections::HashMap, vec};
 use lazy_static::lazy_static;
 use regex::Regex;
 
-use crate::{clap::ARGS, data::input::INPUT};
+use crate::data::input::INPUT;
 
 lazy_static! {
     static ref SYMBOL_REGEX: Regex = Regex::new(r"[^\w\d.]").unwrap();
@@ -108,14 +108,6 @@ fn pad(contents: String) -> String {
         .collect();
 }
 
-pub fn main() -> String {
-    return match ARGS.part {
-        1 => p1(),
-        2 => p2(),
-        _ => panic!("Unknown part"),
-    };
-}
-
 fn p1() -> String {
     let contents = pad(INPUT.to_owned());
 
@@ -177,11 +169,22 @@ pub fn p2() -> String {
     return gears.values().sum::<u32>().to_string();
 }
 
+// Day Meta
 lazy_static::lazy_static! {
-    pub static ref DAY: crate::years::config::Day = crate::years::config::Day {
+    pub static ref DAY: crate::types::Day = crate::types::Day {
         day: 3,
-        p1,
-        p2,
+        parts: [
+            &crate::types::Part {
+                func: p1,
+                example: Some(include_str!("example.txt")),
+                example_answer: Some(include_str!("example1_answer.txt")),
+            },
+            &crate::types::Part {
+                func: p2,
+                example: Some(include_str!("example.txt")),
+                example_answer: Some(include_str!("example2_answer.txt")),
+            },
+        ]
 
     };
 }

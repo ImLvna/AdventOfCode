@@ -1,0 +1,59 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug executable 'advent_of_code'",
+			"cargo": {
+				"args": ["build", "--bin=advent_of_code", "--package=advent_of_code"],
+				"filter": {
+					"name": "advent_of_code",
+					"kind": "bin"
+				}
+			},
+			"args": ["${input:year}", "${input:day}", "${input:part}", "-s", "-v"],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in executable 'advent_of_code'",
+			"cargo": {
+				"args": [
+					"test",
+					"--no-run",
+					"--bin=advent_of_code",
+					"--package=advent_of_code"
+				],
+				"filter": {
+					"name": "advent_of_code",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		}
+	],
+	"inputs": [
+		{
+			"id": "year",
+			"type": "promptString",
+			"description": "Year",
+			"default": "2023"
+		},
+		{
+			"id": "day",
+			"type": "promptString",
+			"description": "Day",
+			"default": "1"
+		},
+		{
+			"id": "part",
+			"type": "pickString",
+			"description": "Part",
+			"options": ["1", "2"],
+			"default": "1"
+		}
+	]
+}

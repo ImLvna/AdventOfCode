@@ -10,11 +10,22 @@ pub fn p2() -> String {
     return 0.to_string();
 }
 
+// Day Meta
 lazy_static::lazy_static! {
-    pub static ref DAY: crate::years::config::Day = crate::years::config::Day {
-        day:4,
-        p1,
-        p2,
+    pub static ref DAY: crate::types::Day = crate::types::Day {
+        day: 4,
+        parts: [
+            &crate::types::Part {
+                func: p1,
+                example: Some(include_str!("example.txt")),
+                example_answer: Some(include_str!("example_answer.txt")),
+            },
+            &crate::types::Part {
+                func: p2,
+                example: Some(include_str!("example.txt")),
+                example_answer: Some(include_str!("example_answer.txt")),
+            },
+        ]
 
     };
 }

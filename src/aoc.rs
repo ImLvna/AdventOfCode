@@ -12,12 +12,13 @@ lazy_static! {
         if !COOKIE_FILE.exists() {
             request_session_cookie();
         }
+        let args = ARGS.lock().unwrap();
         return AocClient::builder()
             .session_cookie_from_file(COOKIE_FILE.as_path())
             .expect("Failed to read cookie file!")
-            .year(ARGS.year.try_into().unwrap())
+            .year(args.year.try_into().unwrap())
             .expect("Failed to set client year!")
-            .day(ARGS.day.try_into().unwrap())
+            .day(args.day.try_into().unwrap())
             .expect("Failed to set client day!")
             .build()
             .expect("Failed to build aoc client!");

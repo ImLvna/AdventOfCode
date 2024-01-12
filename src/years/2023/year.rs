@@ -1,4 +1,4 @@
-use crate::years::config::Year;
+use crate::types::Year;
 
 #[path = "0/main.rs"]
 pub mod _0;
@@ -11,6 +11,7 @@ pub mod _3;
 #[path = "4/main.rs"]
 pub mod _4;
 
+// Year Meta
 lazy_static::lazy_static! {
     pub static ref YEAR: Year = Year {
         year: 2023,
